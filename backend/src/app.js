@@ -1,9 +1,11 @@
 const express = require('express');
 
-const app=express()
+const app = express()
 
-app.get('/', (req,res)=>{
+app.get('/', (req, res) => {
     res.send('Hello World')
 })
 
-module.exports= app;
+app.use('/ai', require('./routes/ai.routes'));
+
+module.exports = app;

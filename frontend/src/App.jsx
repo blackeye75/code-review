@@ -18,7 +18,7 @@ function App() {
     <>
       <main className='w-full h-screen flex bg-zinc-800 p-4 gap-4' >
         <div className="left h-full w-full basis-[50%] ">
-          <div className="code w-full h-full bg-zinc-900 p-4 rounded-lg">
+          <div className="code w-full h-full bg-zinc-900 p-4 rounded-lg ">
             <Editor
               value={code}
               onValueChange={code => setCode(code)}

@@ -3,6 +3,10 @@ import "prismjs/themes/prism-tomorrow.css"
 import Editor from "react-simple-code-editor"
 import prism from "prismjs"
 import './App.css'
+import axios from 'axios'
+import Markdown from "react-markdown"
+import "highlight.js/styles/github-dark.css";
+import rehypeHighlight from "rehype-highlight";
 
 function App() {
 
@@ -10,15 +14,22 @@ function App() {
     return 1 + 1;
   }`)
 
+  const [review, setReview] = useState(``)
+
   useEffect(() => {
     prism.highlightAll()
   }, [])
+
+  async function reviewCode() {
+    const response = await axios.post('http://localhost:3000/ai/get-review', { code })
+    setReview(response.data)
+  }
 
   return (
     <>
       <main className='w-full h-screen flex bg-zinc-800 p-4 gap-4' >
         <div className="left h-full w-full basis-[50%] ">
-          <div className="code w-full h-full bg-zinc-900 p-4 rounded-lg ">
+          <div className="code w-full h-full bg-zinc-900 p-4 rounded-lg relative ">
             <Editor
               value={code}
               onValueChange={code => setCode(code)}
@@ -30,15 +41,20 @@ function App() {
                 border: "1px solid #ddd",
                 borderRadius: "5px",
                 height: "100%",
-                width: "100%"
+                width: "100%",
+                padding: "1rem",
               }}
             />
             <div
-              // onClick={reviewCode}
-              className="review bottom-4 left-4">Review</div>
+              onClick={reviewCode}
+              className="review absolute bottom-4 right-4 bg-white text-black px-3 py-2 font-medium rounded-md">Review</div>
           </div>
         </div>
-        <div className="right h-full bg-cyan-950 rounded-md basis-[50%]"></div>
+        <div className="right h-full bg-cyan-950 rounded-md basis-[50%]">
+          <Markdown
+            rehypePlugins={[rehypeHighlight]}
+          >{review}</Markdown>
+        </div>
       </main>
     </>
   )

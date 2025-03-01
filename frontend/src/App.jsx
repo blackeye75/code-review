@@ -7,7 +7,7 @@ import './App.css'
 function App() {
 
   const [code, setCode] = useState(` function sum() {
-    return 1 + 1
+    return 1 + 1;
   }`)
 
   useEffect(() => {

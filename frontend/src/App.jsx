@@ -47,11 +47,12 @@ function App() {
             />
             <div
               onClick={reviewCode}
-              className="review absolute bottom-4 right-4 bg-white text-black px-3 py-2 font-medium rounded-md">Review</div>
+              className="review absolute bottom-6 right-6 cursor-pointer bg-white text-black px-3 py-2 font-medium rounded-md">Review</div>
           </div>
         </div>
-        <div className="right h-full bg-cyan-950 rounded-md basis-[50%]">
-          <Markdown
+        <div className="right p-4 overflow-auto text-white h-full bg-cyan-950 rounded-md basis-[50%]">
+          <Markdown 
+          border-radius={5}
             rehypePlugins={[rehypeHighlight]}
           >{review}</Markdown>
         </div>

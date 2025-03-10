@@ -14,13 +14,21 @@ function App() {
 
   const [review, setReview] = useState(``)
 
+  const [loading, setLoading] = useState(false); // Loading state
+
   useEffect(() => {
     prism.highlightAll()
   }, [])
 
   async function reviewCode() {
+
+    setLoading(true); // Start loading
+    setReview(""); // Clear previous review
+
     const response = await axios.post('http://localhost:3000/ai/get-review', { code })
     setReview(response.data)
+
+    setLoading(false);
   }
 
   return (
@@ -49,11 +57,12 @@ function App() {
               className="review absolute bottom-6 right-6 cursor-pointer bg-white text-black px-3 py-2 font-medium rounded-md">Review</div>
           </div>
         </div>
-        <div className="right p-4 overflow-auto text-white h-full bg-cyan-950 rounded-md basis-[50%]">
-          <Markdown 
-          // border-radius={5}
-          rehypePlugins={[rehypeHighlight]}
-          >{review}</Markdown>
+        <div className="right relative p-4 overflow-auto text-white h-full bg-cyan-950 rounded-md basis-[50%]">
+          {loading ? (
+            <div className="loader absolute top-[50%] left-[50%] -translate-x-[50%] -translate-y-[50%]"></div> // Show loader when loading
+          ) : (
+            <Markdown rehypePlugins={[rehypeHighlight]}>{review}</Markdown>
+          )}
         </div>
       </main>
     </>

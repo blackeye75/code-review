@@ -10,9 +10,7 @@ import rehypeHighlight from "rehype-highlight";
 
 function App() {
 
-  const [code, setCode] = useState(` function sum() {
-    return 1 + 1;
-  }`)
+  const [code, setCode] = useState("")
 
   const [review, setReview] = useState(``)
 
@@ -29,10 +27,10 @@ function App() {
     <>
       <main className='w-full h-screen flex bg-zinc-800 p-4 gap-4' >
         <div className="left h-full w-full basis-[50%] ">
-          <div className="code w-full h-full bg-zinc-900 p-4 rounded-lg relative ">
+          <div className="code w-full h-full bg-zinc-900 text-white  rounded-lg relative ">
             <Editor
               value={code}
-              onValueChange={code => setCode(code)}
+              onValueChange={(code) => setCode(code)}
               highlight={code => prism.highlight(code, prism.languages.javascript, "javascript")}
               padding={10}
               style={{
@@ -42,7 +40,8 @@ function App() {
                 borderRadius: "5px",
                 height: "100%",
                 width: "100%",
-                padding: "1rem",
+
+                // padding: "1rem",
               }}
             />
             <div
@@ -52,8 +51,8 @@ function App() {
         </div>
         <div className="right p-4 overflow-auto text-white h-full bg-cyan-950 rounded-md basis-[50%]">
           <Markdown 
-          border-radius={5}
-            rehypePlugins={[rehypeHighlight]}
+          // border-radius={5}
+          rehypePlugins={[rehypeHighlight]}
           >{review}</Markdown>
         </div>
       </main>
